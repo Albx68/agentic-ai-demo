@@ -1,14 +1,22 @@
 from pydantic_ai import Agent
+from dotenv import load_dotenv
 
-agent = Agent('openai:gpt-4o')
+from prompts.generate_frontend_code import generate_frontend_code
+from prompts.generate_frontend_tests import generate_frontend_tests
+load_dotenv()
+frontend_agent = Agent('openai:gpt-3.5-turbo')
+test_agent = Agent('openai:gpt-3.5-turbo')
 
-result_sync = agent.run_sync('What is the capital of Italy')
-print('result_sync', result_sync.data)
+frontend_prompt = generate_frontend_code(
+    component="ChatUI",
+    framework="React",
+    styling="CSS",
+    features=["Auto-scroll on new messages", "Typing indicator"]
+)
+frontend_code = frontend_agent.run_sync(frontend_prompt)
 
+print('frontend code', frontend_code.data)
+test_prompt = generate_frontend_tests(frontend_code, framework="React")
+test_cases = test_agent.run_sync(test_prompt)
 
-async def main():
-    result = await agent.run('What is the capital of France')
-    print(result.data)
-
-    async with agent.run_stream('What is the capital of the UK?') as response:
-        print(await response.get_data())
+print('test cases', test_cases.data)
