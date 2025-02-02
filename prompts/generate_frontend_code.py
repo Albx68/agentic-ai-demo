@@ -8,6 +8,11 @@ def generate_frontend_code(component="ChatUI", framework="React", styling="CSS",
     - Be compatible with {framework} and {styling}.
     - Include the following features:
     {features_str}
+    - Use standard typescript to the best of your ability
+    - Make sure response contains only code so that the output can run directly without any modification
+    - Remove JSX indicator and triple quotes
+    - Make sure you include css class names and an import to a ./styles.css file
+    - Make sure only exisiting imports are used
 
     The component should:
     - Have a text input for user messages.
