@@ -3,11 +3,14 @@ from dotenv import load_dotenv
 import os
 from prompts.generate_frontend_code import generate_frontend_code
 from prompts.generate_css import generate_css
+
 load_dotenv()
+
 react_agent = Agent('openai:gpt-3.5-turbo')
 css_agent = Agent('openai:gpt-3.5-turbo')
 
 component_name = 'ChatUI'
+
 frontend_prompt = generate_frontend_code(
     component=component_name,
     framework="React",
